@@ -42,7 +42,9 @@ Route::group(['prefix'=>'admin'], function(){
     //ROUTE THEM NHAN VIEN:
     Route::get('themtaikhoannhanvien','pagecontroller@getThemtaikhoannhanvien');
     Route::post('themtaikhoannhanvien','pagecontroller@postThemtaikhoannhanvien')->name('postNhanvien');
-
+    //Tai khoan nhan vien:
+    Route::get('taikhoannhanvien','pagecontroller@getTaikhoannhvien');
+    Route::get('taikhoannhanvien/kichhoat/{id}','pagecontroller@getKichhoat');
     //NHAN VIEN:
     Route::group(['prefix'=>'nhanvien'],function(){
       Route::get('tienluong','pagecontroller@getTienluong');

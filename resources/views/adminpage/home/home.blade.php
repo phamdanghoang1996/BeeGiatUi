@@ -54,7 +54,12 @@
             margin-top: 20px;
           }
         </style>
-          <div class="container" class="form-group" style="width: 90%; margin-left: 15%;">
+          <div class="container" class="form-group" style="width: 70%; margin-left: 15%;">
+            @if(session('ThongBao'))
+              <div class="alert alert-success" style="margin-top: 10px;">
+                  <p style="font-weight: bold; font-size: 16px;">{{session('ThongBao')}}</p>
+              </div>
+            @endif
               <h3> TIẾN TRÌNH GIẶT: </h3>
                   <form class="" action="{{route('postHome')}}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -112,8 +117,6 @@
 
   </div>
   <!-- /#wrapper -->
-
   @include('layouts.lib_js_home')
 </body>
-
 </html>

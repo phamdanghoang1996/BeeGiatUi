@@ -27,21 +27,13 @@
   input{
     width: 70%;
   }
+
+   label.error {
+       display: inline-block;
+       color:red;
+       width: 100%;
+   }
 </style>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#re_matkhau").keyup(function(){
-        var re_matkhau = $(this).val();
-        var matkhau = $("#matkhau").val();
-        if(re_matkhau==matkhau){
-          $("#thongbao").html("<p style='font-weight:bold;'> Khớp mật khẩu </p>");
-        }
-        else {
-          $("#thongbao").html("<p style='font-weight:bold;'> Không khớp mật khẩu</p>");
-        }
-    });
-  });
-</script>
   <div id="wrapper">
       <!-- Navigation -->
       @include('layouts.theme.navmenu')
@@ -53,9 +45,10 @@
             </div>
           @endif
             <h3>Thêm tài khoản nhân viên:  </h3>
-            <form class="" action="{{route('postNhanvien')}}" method="post">
+            <form class="" action="{{route('postNhanvien')}}" method="post" id="form-add">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <label for="">Tên nhân viên: </label>
+              <br>
                 <input type="text" name="tennv" value="" class="form-control"
                 placeholder="Họ và tên">
              <label for="">Sinh ngày: </label>
@@ -67,14 +60,16 @@
               <label for="">Số chứng minh nhân dân: </label>
                 <input type="number" name="cmnd" value="" class="form-control"
                 placeholder="Số">
+                <label for="">Lương: </label>
+                  <input type="number" name="luong" value="" class="form-control"
               <label for="">Tên tài khoản: </label>
-                <input type="text" name="tentk" value="" class="form-control" required="required"
+                <input type="text" name="tentk" value="" class="form-control"
                 placeholder="6-12 ký tự">
               <label for="">Mật khẩu: </label>
-                <input type="password" name="matkhau" value="" class="form-control" id="matkhau" required="required"
+                <input type="password" name="matkhau" value="" class="form-control" id="matkhau"
                 placeholder="6-12 ký tự">
               <label for="">Nhập lại mật khẩu: </label>
-                  <input type="password" name="re_matkhau" value="" class="form-control" id="re_matkhau" required="required"
+                  <input type="password" name="re_matkhau" value="" class="form-control" id="re_matkhau"
                   placeholder="">
                   <p id="thongbao"></p>
               <div class="text-center">
@@ -86,8 +81,53 @@
 
   </div>
   <!-- /#wrapper -->
-
   @include('layouts.lib_js_home')
+  <script type="text/javascript" src={{asset('js/jquery.validate.min.js')}}> </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#form-add").validate({
+          rules: {
+            tennv: "required",
+            sinhngay: {
+              required: true,
+              date: true
+            },
+            noio: "required",
+            matkhau: {
+              required: true,
+              minlength: 6,
+              maxlength: 12
+            },
+            re_matkhau: {
+              required: true,
+              minlength: 6,
+              maxlength: 12,
+              equalTo: "#re_matkhau"
+            }
+          },
+          messages: {
+            tennv: "Vui lòng nhập vào trường này",
+            sinhngay: {
+              required: "Vui lòng nhập vào trường này",
+              date: "Nhập định dạng ngày không chính xác",
+            },
+            noio: "Vui lòng nhập vào trường này",
+            matkhau: {
+              required: "Vui lòng nhập vào trường này",
+              minlength: "Chưa đủ 6 ký tự",
+              maxlength: "Quá chiều dài mật khẩu"
+            },
+            re_matkhau: {
+              required: "<p> Vui lòng nhập vào trường này </p>",
+              minlength: "Chưa đủ 6 ký tự",
+              maxlength: "Quá chiều dài mật khẩu",
+              equalTo: "Không trùng mật khẩu"
+            }
+          }
+
+      });
+    });
+  </script>
 </body>
 
 </html>

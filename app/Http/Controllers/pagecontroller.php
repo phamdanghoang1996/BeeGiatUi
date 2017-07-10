@@ -58,8 +58,7 @@ class pagecontroller extends Controller
                 $time = Carbon::now();
             $giat->giatluc = $time;
             $giat->save();
-            return redirect()->route('home');
-
+            return redirect()->route('home')->with('ThongBao', 'Hãy bắt đầu giặt đi!');
       }
   //THONG KE:
         public function getThongke(){
@@ -103,18 +102,29 @@ class pagecontroller extends Controller
         $phuong = DB::table('ward')->where('districtid','=',$id)->get();
         return view('adminpage.home.ajaxphuong',['quan'=>$phuong]);
     }
+    //LỊCH SỬ GIẶT ỦI:
+        public function getLichsu(){
+          $thongtin = DB::table('giat')->get();
+          return view('adminpage.lichsu.lichsu',['thongtin'=>$thongtin]);
+        }
     // NHAN VIEN:
       //THÊM NHÂN VIÊN:
         public function getThemtaikhoannhanvien(){
           return view('adminpage.nhanvien.themnhanvien');
         }
         public function postThemtaikhoannhanvien(Request $request){
+          //Thêm lương:
+          $luong = new luong();
+          $luong->luong = $request->luong;
+          $luong->save();
+          $id_luong = DB::table('luong')->max('id_luong');
           //Them tai thong tin nhan vien:
           $nhanvien = new nhanvien();
           $nhanvien->tennhanvien = $request->tennv;
           $nhanvien->sinhngay = $request->sinhngay;
           $nhanvien->cmnd = $request->cmnd;
           $nhanvien->noio = $request->noio;
+          $nhanvien->maluong = $id_luong;
           $nhanvien->save();
           //Them tai khoan nhan vien:
           $taikhoan = new taikhoan();
@@ -124,9 +134,18 @@ class pagecontroller extends Controller
           $taikhoan->time =$time;
               $id_nhanvien = DB::table('nhanvien')->max('id_nhanvien');
           $taikhoan->id_nhanvien = $id_nhanvien;
+          $taikhoan->trangthai = "0";
           $taikhoan->save();
           //Bat update vao 2 bang nay:
         return redirect('admin/quanlynhanvien/themtaikhoannhanvien')->with('thongbao', 'Đã thêm thành công nhân viên');
+        }
+      //TAI KHOAN NHAN VIEN:
+        public function getTaikhoannhvien(){
+          $thongtin = DB::table('nhanvien')->join('taikhoan','nhanvien.id_nhanvien','=','taikhoan.id_nhanvien')->get();
+          return view('adminpage.nhanvien.taikhoannhanvien',['thongtin'=>$thongtin]);
+        }
+        public function getKichhoat($id){
+          
         }
     //CAI DAT:
       //Cập nhật Giá:
@@ -143,7 +162,7 @@ class pagecontroller extends Controller
                 'tiengiat'=>$request->new_giagiat,
                 'tiensay'=>$request->new_giasay
             ]);
-            return redirect()->route('capnhatgia');
+            return redirect()->route('capnhatgia')->with('ThongBao', 'Đã cập nhật thành công giá!');
         }
         public function getChuongtrinh(){
           echo "Chuong trinh khuyen mai";

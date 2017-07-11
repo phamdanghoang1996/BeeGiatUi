@@ -51,7 +51,11 @@
           }
           h3{
             font-weight: bold;
-            margin-top: 20px;
+          }
+          p{
+            font-weight: bold;
+            font-size: 16px;
+            margin-left: 10%;
           }
         </style>
           <div class="container" class="form-group" style="width: 70%; margin-left: 15%;">
@@ -60,15 +64,15 @@
                   <p style="font-weight: bold; font-size: 16px;">{{session('ThongBao')}}</p>
               </div>
             @endif
-              <h3> TIẾN TRÌNH GIẶT: </h3>
+              <h3> Tiền trình giặt: </h3>
                   <form class="" action="{{route('postHome')}}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <label for="">Hình thức làm: </label>
                     <div class="form-group" style="border-bottom: 1px solid; width: 70%">
-                          <p style="font-weight: bold; font-size: 16px;">&nbsp;	&nbsp;	&nbsp;	&nbsp;Giặt:
+                          <p> Giặt:
                             <input type="checkbox" name="giat" value="{{$tiengiat}}" id="giat" style="width: 30px; height: 20px;" checked>
                           </p>
-                          <p style="font-weight: bold; font-size: 16px;">&nbsp;	&nbsp;	&nbsp;	&nbsp;Sấy :
+                          <p> Sấy :
                             <input type="checkbox" name="say" value="{{$tiensay}}" id="say" style="width: 30px; height: 20px; ">
                           </p>
                     </div>
@@ -77,29 +81,35 @@
                     <div id="tongcong">
 
                     </div>
+                    <label for="">Trạng thái: </label>
+                    <p>
+                        Chưa thanh toán: <input type="radio" name="trangthai" value="Chưa thanh toán" checked >
+                    </p>
+                  <p>
+                       Đã thanh toán: <input type="radio" name="trangthai" value="Đã thanh toán">
+                  </p>
                     <label for="">Loại khách hàng: </label>
                     <script type="text/javascript">
-                        $(document).ready(function(){
+                      /*  $(document).ready(function(){
                           $('#khachchinh').click(function(){
                             $("#thongtin").html("<p style='font-weight: bold; font-size: 14px' id='chinh'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Số điện thoại<input type='number' name='sodt' id='sodt' class='form-control' value='1' style='width: 40%; margin-left: 10%;'/> </p>");
                           });
                           $('#khachvanglai').click(function(){
                             $('#chinh').hide();
                           });
-                        });
+                        }); */
                     </script>
 
                     <div class="form-group">
-                          	<p style="font-weight: bold; font-size: 16px;">	&nbsp;	&nbsp;	&nbsp;	&nbsp;Khách vãng lai:
+                          	<p>Khách vãng lai:
                             <input type="radio" name="loaikh" value="Khách vãng lai" id="khachvanglai" style="width: 30px; height: 20px;" checked>
                           </p>
-                          <p style="font-weight: bold; font-size: 16px;">	&nbsp;	&nbsp;	&nbsp;	&nbsp;Khách chính:
+                          <p> Khách chính:
                             <input type="radio" name="loaikh" value="Khách chính" id="khachchinh" style="width: 30px; height: 20px; ">
                             <div id="thongtin">
                                 <input type="hidden" name="tiengiat" value="0" id="tiengiat">
                                 <input type="hidden" name="tiensay" value="0" id="tiensay2">
                                 <input type="hidden" name="thanhtien" value="0" id = "thanhtien">
-
                             </div>
                           </p>
                     </div>

@@ -20,9 +20,12 @@ Route::group(['prefix'=>'admin'], function(){
   //THONG KE:
   Route::get('thongke','pagecontroller@getThongke');
   Route::group(['prefix'=>'thongke'], function(){
+    //Thong ke chung:
+    Route::get('thongkechung','pagecontroller@getThongkechung');
     //Thong ke giat ui:
     Route::get('thongkegiatui','pagecontroller@getThongkegiatui')->name('thongkegiatui');
     Route::post('thongkegiatui','pagecontroller@postThongkegiatui')->name('postGiatUi');
+    //Thong ke so luot:
     Route::get('thongkesoluot','pagecontroller@getThongkesoluot');
     Route::get('thongkedoanhso','pagecontroller@getThongkedoanhso');
     Route::get('thongkekhachhang','pagecontroller@getThongkekhachhang');
@@ -44,13 +47,13 @@ Route::group(['prefix'=>'admin'], function(){
     Route::post('themtaikhoannhanvien','pagecontroller@postThemtaikhoannhanvien')->name('postNhanvien');
     //Tai khoan nhan vien:
     Route::get('taikhoannhanvien','pagecontroller@getTaikhoannhvien');
-    Route::get('taikhoannhanvien/kichhoat/{id}','pagecontroller@getKichhoat');
+    Route::get('taikhoannhanvien/kichhoat/{id_taikhoan}/{trangthai}','pagecontroller@getKichhoat');
     //NHAN VIEN:
     Route::group(['prefix'=>'nhanvien'],function(){
       Route::get('tienluong','pagecontroller@getTienluong');
       Route::get('nocongnhanvien','pagecontroller@getNocong');
       Route::get('ngaynghi','pagecontroller@getNgaynghi');
-      Route::get('tienthong','pagecontroller@getTienthuong');
+      Route::get('tienthuong','pagecontroller@getTienthuong');
     });
   });
   //CAI DAT:

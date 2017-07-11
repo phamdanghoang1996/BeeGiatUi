@@ -64,7 +64,7 @@
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Thống kê<span class="fa arrow"></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="">Thống kê chung</a>
+                            <a href="{{url('admin/thongke/thongkechung')}}">Thống kê chung</a>
                         </li>
                         <li>
                             <a href="{{url('admin/thongke/thongkegiatui')}}">Thống kê tiền giặt và ủi</a>
@@ -78,41 +78,41 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-table fa-fw"></i> Lịch sử giặt ủi</a>
+                    <a href="{{url('admin/lichsugiat')}}"><i class="fa fa-table fa-fw"></i> Lịch sử giặt ủi</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-group"></i> Quản lý khách hàng <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Thêm tài khoản khách hàng</a>
+                            <a href="{{url('admin/quanlykhachhhang/themtaikhoankhachhang')}}">Thêm tài khoản khách hàng</a>
                         </li>
                         <li>
-                            <a href="#">Tài khoản khách hàng</a>
+                            <a href="{{url('admin/quanlykhachhhang/taikhoankhachhang')}}">Tài khoản khách hàng</a>
                         </li>
                     </ul>
                 <li>
                     <a href="#"><i class="fa fa-universal-access"></i> Quản lý nhân viên <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                          <a href="#">Thêm tài khoản nhân viên</a>
+                          <a href="{{url('admin/quanlynhanvien/themtaikhoannhanvien')}}">Thêm tài khoản nhân viên</a>
                         </li>
                         <li>
-                            <a href="#">Tài khoản nhân viên</a>
+                            <a href="{{url('admin/quanlynhanvien/taikhoannhanvien')}}">Tài khoản nhân viên</a>
                         </li>
                         <li>
                             <a href="#">Nhân viên <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
-                                    <a href="#">Tiền lương</a>
+                                    <a href="{{url('admin/quanlynhanvien/nhanvien/tienluong')}}">Tiền lương</a>
                                 </li>
                                 <li>
-                                    <a href="#">Nợ công nhân viên</a>
+                                    <a href="{{url('admin/quanlynhanvien/nhanvien/nocongnhanvien')}}">Nợ công nhân viên</a>
                                 </li>
                                 <li>
-                                    <a href="#">Số ngày nghỉ</a>
+                                    <a href="{{url('admin/quanlynhanvien/nhanvien/ngaynghi')}}">Số ngày nghỉ</a>
                                 </li>
                                 <li>
-                                    <a href="#">Tiền thưởng</a>
+                                    <a href="{{url('admin/quanlynhanvien/nhanvien/tienthuong')}}">Tiền thưởng</a>
                                 </li>
                             </ul>
 

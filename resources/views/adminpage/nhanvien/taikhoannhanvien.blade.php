@@ -8,6 +8,7 @@
   <script type="text/javascript">
     function xuly(id){
       var trangthai = id.getAttribute("data-id-type"); //id nay dai dien cho cai this... This tro vao cai hien tai cua no
+      var id_taikhoan = id.getAttribute("id");
       var id_bam = "#"+id.getAttribute("id"); //Lay gia tri nam trong the id
       var value_button = id.getAttribute("button");
       if(trangthai==1){
@@ -15,12 +16,16 @@
         $(id_bam).addClass('btn-danger');
         $(id_bam).html("Kích hoạt");
         id.setAttribute('data-id-type',0);
+        var link = "http://localhost/Bee/public/index.php/admin/quanlynhanvien/taikhoannhanvien/kichhoat/"+id_taikhoan+"/"+trangthai;
+        $.get(link);
       }
       else {
         $(id_bam).attr('class','btn-success');
         $(id_bam).addClass('btn-success');
         $(id_bam).html("Đang hoạt động");
         id.setAttribute('data-id-type',1);
+        var link = "http://localhost/Bee/public/index.php/admin/quanlynhanvien/taikhoannhanvien/kichhoat/"+id_taikhoan+"/"+trangthai;
+        $.get(link);
       }
     }
   </script>

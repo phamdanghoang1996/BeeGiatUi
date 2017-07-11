@@ -15,18 +15,25 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title" style="font-weight:bold;">TIỆM GIẶT BEE: ĐĂNG NHẬP</h3>
+                        <h3 class="panel-title" style="font-weight:bold;">ĐĂNG NHẬP</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form action="{{route('postLogin')}}" method="post">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="Tên đăng nhập" name="tendangnhap" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Mật khẩu" name="matkhau" type="password" value="">
                                 </div>
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+                                <button type="submit" name="button"class="btn btn-lg btn-success btn-block">Login</button>
+                                @if(session('thongbao'))
+                                  <div class="alert alert-danger" style="margin-top: 10px;">
+                                      <p style="font-weight: bold;">{{session('thongbao')}}</p>
+                                  </div>
+                                @endif
+
                             </fieldset>
                         </form>
                     </div>

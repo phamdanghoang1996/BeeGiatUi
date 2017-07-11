@@ -18,6 +18,26 @@ class pagecontroller extends Controller
     public function getLogin(){
       return view('login.login');
     }
+    public function postLogin(Request $request){
+      $taikhoan = DB::table('taikhoan')->where('tentaikhoan','=',$request->tendangnhap)
+        ->where('matkhau','=',$request->matkhau)->get();
+      $count = DB::table('taikhoan')->where('tentaikhoan','=',$request->tendangnhap)
+          ->where('matkhau','=',$request->matkhau)->count();
+      if($count==0){
+        return redirect('login')->with('thongbao', 'Tài khoản hoặc mật khẩu không đúng');
+      }
+      else {
+        foreach ($taikhoan as $item) {
+          if($item->trangthai==1){
+            return redirect('admin/home');
+          }
+          else {
+            return redirect('login')->with('thongbao', 'Tài khoản chưa kích hoạt!');
+          }
+        }
+      }
+
+    }
     //HOME
       public function getHome(){
         $tien = DB::table('capnhattien')->get();
@@ -34,14 +54,17 @@ class pagecontroller extends Controller
       }
       public function postHome(Request $request){
         //Thêm khách hàng:
-        /*$khachhang = new khachhang();
-        $khachhang->id_khachhang = "1";
+        $khachhang = new khachhang();
+          //Khoa chinh khach hang:
+            $kc_kh = DB::table('khachhang')->max('id_khachhang') + 1;
+        $khachhang->id_khachhang = $kc_kh;
         $khachhang->tenkh = $request->tenkh;
         $khachhang->sodt = $request->sodt;
+        $khachhang->loaikh = $request->loaikh;
         $khachhang->id_tp = $request->thanhpho;
         $khachhang->id_quan = $request->quan;
         $khachhang->id_phuong = $request->phuong;
-        $khachhang->save();  */
+        $khachhang->save();
         //Them bang Giat:
         $giat = new giat();
             //Khoa chinh:
@@ -58,11 +81,34 @@ class pagecontroller extends Controller
                 $time = Carbon::now();
             $giat->giatluc = $time;
             $giat->save();
+          //Them vao bang chi tiet hoa don:
+          $cthd = new cthd();
+          $cthd->trangthai = $request->trangthai;
+          $cthd->id_khachhang = $kc_kh;
+          $cthd->id_giat = $id_giat;
+          $cthd->save();
             return redirect()->route('home')->with('ThongBao', 'Hãy bắt đầu giặt đi!');
       }
   //THONG KE:
-        public function getThongke(){
-
+        public function getThongkechung(){
+          //Doanh thu:
+          $tiengiat = DB::table('giat')->sum('tiengiat');
+          $tiensay = DB::table('giat')->sum('tiensay');
+          //doan nay chi la tam thoi thoi:
+          $doanhthu = DB::table('giat')->sum('thanhtien');
+          //Lương dat:
+          $dathanhtoan = DB::table('khachhang')->join('cthd','cthd.id_khachhang','khachhang.id_khachhang')
+          ->where('trangthai','=','Đã thanh toán')->count();
+          $chuathanhtoan = DB::table('khachhang')->join('cthd','cthd.id_khachhang','khachhang.id_khachhang')
+          ->where('trangthai','=','Chưa thanh toán')->count();
+          //TOp khach hang:
+          $khachhang = DB::table('cthd')->join('khachhang','khachhang.id_khachhang','cthd.id_khachhang')->
+          join('giat','giat.id_giat','cthd.id_giat')->orderBy('thanhtien','desc')->limit(1)->get();
+              return view('adminpage.thongke.thongkechung',
+              ['tiengiat'=>number_format($tiengiat),'tiensay'=>
+              number_format($tiensay),'doanhthu'=>number_format($doanhthu)
+              ,'dathanhtoan'=>$dathanhtoan,'chuathanhtoan'=>$chuathanhtoan,
+              'total'=>$dathanhtoan+$chuathanhtoan,'khachhang'=>$khachhang]);
         }
         //Thong ke giat ui:
         public function getThongkegiatui(){
@@ -104,7 +150,7 @@ class pagecontroller extends Controller
     }
     //LỊCH SỬ GIẶT ỦI:
         public function getLichsu(){
-          $thongtin = DB::table('giat')->get();
+          $thongtin = DB::table('giat')->join('cthd','cthd.id_giat','=','giat.id_giat')->get();
           return view('adminpage.lichsu.lichsu',['thongtin'=>$thongtin]);
         }
     // NHAN VIEN:
@@ -144,8 +190,17 @@ class pagecontroller extends Controller
           $thongtin = DB::table('nhanvien')->join('taikhoan','nhanvien.id_nhanvien','=','taikhoan.id_nhanvien')->get();
           return view('adminpage.nhanvien.taikhoannhanvien',['thongtin'=>$thongtin]);
         }
-        public function getKichhoat($id){
-          
+        public function getKichhoat($id_taikhoan,$trangthai){
+            if($trangthai==1){
+              DB::table('taikhoan')->where('id_taikhoan', $id_taikhoan)->update([
+                'trangthai'=>'0'
+              ]);
+            }
+            else {
+              DB::table('taikhoan')->where('id_taikhoan', $id_taikhoan)->update([
+                'trangthai'=>'1'
+              ]);
+            }
         }
     //CAI DAT:
       //Cập nhật Giá:

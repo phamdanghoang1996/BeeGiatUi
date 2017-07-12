@@ -112,11 +112,23 @@ class pagecontroller extends Controller
         }
         //Thong ke giat ui:
         public function getThongkegiatui(){
+        //LEFT CONTENT:
           //Tien giat:
             $tiengiat = DB::table('giat')->sum('tiengiat');
           //Tien say:
             $tiensay = DB::table('giat')->sum('tiensay');
-            return view('adminpage.thongke.thongkegiatui',['tiengiat'=>$tiengiat,'tiensay'=>$tiensay]);
+        //RIGHT CONTENT:
+            $day = Carbon::now()->day;
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $thoigian = array();
+            for($i = 7;$i<=21;$i++){
+              $kt_bd = "$year".'-'."$month".'-'."$day".' '."$i".':'.'00'.':'.'00';
+              $kt_kt = "$year".'-'."$month".'-'."$day".' '."$i".':'.'59'.':'.'59';
+              $thoigian[$i] = DB::table('giat')->where('giatluc', '>=' ,$kt_bd)->where('giatluc','<=',$kt_kt)->count();
+            }
+            return view('adminpage.thongke.thongkegiatui',['tiengiat'=>$tiengiat,'tiensay'=>$tiensay,'thoigian'=>$thoigian]);
+
         }
         public function postThongkegiatui(Request $req){
             if(isset($req->bd1_tungay)){
@@ -170,31 +182,40 @@ class pagecontroller extends Controller
           return view('adminpage.nhanvien.themnhanvien');
         }
         public function postThemtaikhoannhanvien(Request $request){
-          //Thêm lương:
-          $luong = new luong();
-          $luong->luong = $request->luong;
-          $luong->save();
-          $id_luong = DB::table('luong')->max('id_luong');
-          //Them tai thong tin nhan vien:
-          $nhanvien = new nhanvien();
-          $nhanvien->tennhanvien = $request->tennv;
-          $nhanvien->sinhngay = $request->sinhngay;
-          $nhanvien->cmnd = $request->cmnd;
-          $nhanvien->noio = $request->noio;
-          $nhanvien->maluong = $id_luong;
-          $nhanvien->save();
-          //Them tai khoan nhan vien:
-          $taikhoan = new taikhoan();
-          $taikhoan->tentaikhoan = $request->tentk;
-          $taikhoan->matkhau = $request->matkhau;
-              $time = Carbon::now();
-          $taikhoan->time =$time;
-              $id_nhanvien = DB::table('nhanvien')->max('id_nhanvien');
-          $taikhoan->id_nhanvien = $id_nhanvien;
-          $taikhoan->trangthai = "0";
-          $taikhoan->save();
-          //Bat update vao 2 bang nay:
-        return redirect('admin/quanlynhanvien/themtaikhoannhanvien')->with('thongbao', 'Đã thêm thành công nhân viên');
+          $kt = DB::table('taikhoan')->where('tentaikhoan', $request->tentk)->count();
+          if($kt==0){
+
+            //Thêm lương:
+            $luong = new luong();
+            $luong->luong = $request->luong;
+            $luong->save();
+            $id_luong = DB::table('luong')->max('id_luong');
+            //Them tai thong tin nhan vien:
+            $nhanvien = new nhanvien();
+            $nhanvien->id_nhanvien = $request->id_nhanvien;
+            $nhanvien->tennhanvien = $request->tennv;
+            $nhanvien->sinhngay = $request->sinhngay;
+            $nhanvien->cmnd = $request->cmnd;
+            $nhanvien->noio = $request->noio;
+            $nhanvien->maluong = $id_luong;
+            $nhanvien->save();
+            //Them tai khoan nhan vien:
+            $taikhoan = new taikhoan();
+            $taikhoan->id_taikhoan = $request->id_nhanvien;
+            $taikhoan->tentaikhoan = $request->tentk;
+            $taikhoan->matkhau = $request->matkhau;
+                $time = Carbon::now();
+            $taikhoan->time =$time;
+            $taikhoan->id_nhanvien = $request->id_nhanvien;
+            $taikhoan->trangthai = "0";
+            $taikhoan->save();
+          return redirect('admin/quanlynhanvien/themtaikhoannhanvien')->with('thongbao_tc', 'Đã thêm thành công nhân viên');
+
+          }
+          else {
+            return redirect('admin/quanlynhanvien/themtaikhoannhanvien')->with('thongbao_tb', 'Tài khoản này đã có người sử dụng');
+          }
+
         }
       //TAI KHOAN NHAN VIEN:
         public function getTaikhoannhvien(){

@@ -114,7 +114,7 @@
               <div class="panel-default">
                   <div class="panel-body" style="background-color: #F75C4C;">
                     <div class="col-md-5">
-                      <img src="{{asset('images/thongkechung/bill.png')}}" class="img-responsive">
+                      <img src="{{asset('images/thongkechung/time.png')}}" class="img-responsive">
                     </div>
                     <div class="col-md-7">
                       <div class="text-center">
@@ -123,8 +123,8 @@
 
                       <div class="text-right">
                       <div style="border-bottom: 1px solid #FFFF;">
-                        <p style="font-weight: bold; color: #FFFF; font-size: 18px;">Đã thanh toán: {{$dathanhtoan}} hóa đơn</p>
-                        <p style="font-weight: bold; color: #FFFF; font-size: 18px;">Chưa thanh thanh toán: {{$chuathanhtoan}} hóa đơn</p>
+                        <p style="font-weight: bold; color: #FFFF; font-size: 18px;">Đặt nhiều nhất: {{$dathanhtoan}} hóa đơn</p>
+                        <p style="font-weight: bold; color: #FFFF; font-size: 18px;">Đặt ít nhất: {{$chuathanhtoan}} hóa đơn</p>
                       </div>
 
                           <p style="font-weight: bold; color: #FFFF; font-size: 20px;"> {{$total}} hóa đơn</p>

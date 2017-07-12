@@ -45,25 +45,33 @@
             font-weight: bold;
             margin-top: 20px;
           }
-          .table{
-            width: 80%;
+          .table-bordered{
+            width: 90%;
+            margin-top: 1%;
           }
           button {
             font-weight: bold;
           }
+          td{
+            padding: 1%;
+          }
+          thead{
+            font-weight: bold;
+            background-color: #DFF0D8;
+          }
         </style>
           <div class="container" class="form-group" style="width: 90%; margin-left: 15%;">
               <h3> Thông tin tài khoản </h3>
-              <table class="table">
-                  <thead>
-                      <th>ID</th>
-                      <th>Tên nhân viên</th>
-                      <th>Tên tài khoản</th>
-                      <th>Ngày khởi tạo</th>
-                      <th>Chức năng</th>
+              <table class="table-bordered">
+                  <thead class="text-center">
+                      <td style="width:5%;">ID</td>
+                      <td>Tên nhân viên</td>
+                      <td>Tên tài khoản</td>
+                      <td>Ngày khởi tạo</td>
+                      <td>Chức năng</td>
                   </thead>
                   @foreach($thongtin as $key)
-                  <tbody>
+                  <tbody class="text-center">
                       <td>{{$key->id_taikhoan}}</td>
                       <td>{{$key->tennhanvien}}</td>
                       <td>{{$key->tentaikhoan}}</td>

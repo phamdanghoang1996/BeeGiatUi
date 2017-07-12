@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+    <title>Lịch sử giặt</title>
     @include('layouts.lib_css_home')
 </head>
 
@@ -22,11 +23,19 @@
             font-weight: bold;
             margin-top: 20px;
           }
-          .table{
-            width: 80%;
+          .table-bordered{
+            width: 90%;
+            margin-top: 1%;
           }
-          .table tdhover{
-
+          button {
+            font-weight: bold;
+          }
+          td{
+            padding: 1%;
+          }
+          thead{
+            font-weight: bold;
+            background-color: #DFF0D8;
           }
         </style>
           <div class="container" class="form-group" style="width: 90%; margin-left: 15%;">
@@ -41,19 +50,20 @@
                       <option value="trangthai">Trạng thái</option>
                     </select>
               </div>
-              <table class="table">
-                  <thead>
-                      <th>ID</th>
-                      <th>Giặt lúc</th>
-                      <th>Số KG</th>
-                      <th>Tiền giặt</th>
-                      <th>Tiền sấy</th>
-                      <th>Thành tiền</th>
-                      <th>Trạng thái</th>
-                      <th>Chức năng</th>
+              <table class="table-bordered">
+                  <thead class="text-center">
+                      <td style="width:5%;">ID</td>
+                      <td>Giặt lúc</td>
+                      <td>Số KG</td>
+                      <td>Tiền giặt</td>
+                      <td>Tiền sấy</td>
+                      <td>Thành tiền</td>
+                      <td>Trạng thái</td>
+                      <td>Chức năng</td>
                   </thead>
+
                   @foreach($thongtin as $key)
-                  <tbody>
+                  <tbody class="text-center">
                       <td>{{$key->id_giat}}</td>
                       <td>{{$key->giatluc}}</td>
                       <td>{{$key->sokg}}</td>

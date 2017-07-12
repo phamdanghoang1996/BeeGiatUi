@@ -39,14 +39,20 @@
       @include('layouts.theme.navmenu')
       <div id="page-wrapper">
         <div class="container" class="form-group" style="width: 70%; margin-left: 15%;">
-          @if(session('thongbao'))
+          @if(session('thongbao_tc'))
             <div class="alert alert-success" style="margin-top: 10px;">
-                <p style="font-weight: bold;">{{session('thongbao')}}</p>
+                <p style="font-weight: bold;">{{session('thongbao_tc')}}</p>
             </div>
+          @elseif(session('thongbao_tb'))
+          <div class="alert alert-danger" style="margin-top: 10px;">
+                <p style="font-weight: bold;">{{session('thongbao_tb')}}</p>
+          </div>
           @endif
+
             <h3>Thêm tài khoản nhân viên:  </h3>
             <form class="" action="{{route('postNhanvien')}}" method="post" id="form-add">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id_nhanvien" value="<?php randomString(); ?>">
               <label for="">Tên nhân viên: </label>
               <br>
                 <input type="text" name="tennv" value="" class="form-control"
@@ -61,7 +67,7 @@
                 <input type="number" name="cmnd" value="" class="form-control"
                 placeholder="Số">
                 <label for="">Lương: </label>
-                  <input type="number" name="luong" value="" class="form-control"
+                  <input type="number" name="luong" value="" class="form-control">
               <label for="">Tên tài khoản: </label>
                 <input type="text" name="tentk" value="" class="form-control"
                 placeholder="6-12 ký tự">
@@ -102,7 +108,7 @@
               required: true,
               minlength: 6,
               maxlength: 12,
-              equalTo: "#re_matkhau"
+              equalTo: "#matkhau"
             }
           },
           messages: {
@@ -131,3 +137,14 @@
 </body>
 
 </html>
+<?php
+  function randomString(){
+    $char = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+    $char_length = strlen($char);
+    $return_String = '';
+    for ($i = 0; $i<10; $i++){
+      $return_String .= $char[rand(0, $char_length-1)]; //rand(min,max)... Sau do no vay a!! ,... Hieu... Tra ve cai phan tu chua trong mang
+    }
+    echo $return_String;
+  }
+ ?>

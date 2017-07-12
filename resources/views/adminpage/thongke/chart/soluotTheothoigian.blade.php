@@ -12,10 +12,10 @@ var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ["7h", "8h", "9h", "10h", "11h", "12h","13h", "14h", "15h", "16h", "17h", "18h","19h","20h","21h"],
+        labels: ["7h-7h59", "8h-8h59", "9h-9h59", "10h-10h59", "11h-11h59", "12h-12h-59","13h-13h59", "14h-14h59", "15h-15h59", "16h-16h69", "17h-17h59", "18h-18h59'","19h-19h59","20h-20h59","21h-21h59"],
         datasets: [{
             label: 'Số lượt/h',
-            data: [12, 19, 3, 5, 2, 3,12,12,12,12,12,12,12,12,12],
+            data: [{{$thoigian[7]}}, {{$thoigian[8]}}, {{$thoigian[9]}}, {{$thoigian[10]}}, {{$thoigian[11]}}, {{$thoigian[12]}},{{$thoigian[13]}},{{$thoigian[14]}},{{$thoigian[15]}},{{$thoigian[16]}},{{$thoigian[17]}},{{$thoigian[18]}},{{$thoigian[19]}},{{$thoigian[20]}},{{$thoigian[21]}}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

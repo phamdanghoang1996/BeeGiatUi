@@ -72,9 +72,6 @@
                         <li>
                             <a href="{{url('admin/thongke/thongkedoanhso')}}">Thống kê doanh sô</a>
                         </li>
-                        <li>
-                            <a href="{{url('admin/thongke/thongkekhachhang')}}">Thống kê 10 khách hàng  </a>
-                        </li>
                     </ul>
                 </li>
                 <li>

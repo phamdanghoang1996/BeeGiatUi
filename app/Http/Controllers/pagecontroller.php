@@ -130,14 +130,24 @@ class pagecontroller extends Controller
 
             }
         }
+        //Thống kê số lượt:
         public function getThongkesoluot(){
             return view('adminpage.thongke.chart.soluotTheothoigian');
         }
+        //Thong ke doanh so:
         public function getThongkedoanhso(){
-            return view('adminpage.thongke.chart.thongkedoanhso');
+            $now = Carbon::now()->year;
+            $data = array(11);
+            for($i = 1; $i<=12;$i++){
+              $data[$i] = DB::table('cthd')->join('giat','giat.id_giat','cthd.id_giat')->whereYear('giatluc','=',$now)->whereMonth('giatluc','=',$i)->sum('thanhtien');
+
+            }
+            return view('adminpage.thongke.thongkedoanhso',['data'=>$data,'year_now'=>$now]);
         }
+        //THong ke khach hang:
         public function getThongkekhachhang(){
-            return view('adminpage.thongke.chart.thongkekhachhang');
+
+          return view('adminpage.thongke.thongkekhachhang');
         }
     //KHÁCH HÀNG:
         public function getThemtaikhoankhachhang(){
@@ -147,7 +157,8 @@ class pagecontroller extends Controller
         public function getAjaxQuan($id){
         $phuong = DB::table('ward')->where('districtid','=',$id)->get();
         return view('adminpage.home.ajaxphuong',['quan'=>$phuong]);
-    }
+      }
+    //
     //LỊCH SỬ GIẶT ỦI:
         public function getLichsu(){
           $thongtin = DB::table('giat')->join('cthd','cthd.id_giat','=','giat.id_giat')->get();

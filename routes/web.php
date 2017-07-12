@@ -28,6 +28,7 @@ Route::group(['prefix'=>'admin'], function(){
     //Thong ke so luot:
     Route::get('thongkesoluot','pagecontroller@getThongkesoluot');
     Route::get('thongkedoanhso','pagecontroller@getThongkedoanhso');
+    //Thong ke top 10 khach hang:
     Route::get('thongkekhachhang','pagecontroller@getThongkekhachhang');
   });
   //LICH SU GIAT:

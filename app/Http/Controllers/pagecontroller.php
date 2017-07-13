@@ -49,22 +49,17 @@ class pagecontroller extends Controller
         return
         view('adminpage.home.home',['diachi'=>$diachi,'tiengiat'=>$tiengiat,'tiensay'=>$tiensay]);
       }
-      public function ajaxKhachhang(){
-
-      }
       public function postHome(Request $request){
-        //Thêm khách hàng:
-        $khachhang = new khachhang();
-          //Khoa chinh khach hang:
-            $kc_kh = DB::table('khachhang')->max('id_khachhang') + 1;
-        $khachhang->id_khachhang = $kc_kh;
-        $khachhang->tenkh = $request->tenkh;
-        $khachhang->sodt = $request->sodt;
-        $khachhang->loaikh = $request->loaikh;
-        $khachhang->id_tp = $request->thanhpho;
-        $khachhang->id_quan = $request->quan;
-        $khachhang->id_phuong = $request->phuong;
-        $khachhang->save();
+        //Gen_ID khachvanglai
+            function gen_IDKhachvanglai(){
+              $char = "qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLMNBVCXZDFG";
+              $length_char = strlen($char);
+              $id_khacvl = "KVL";
+              for($i=0;$i<7;$i++){
+                $id_khacvl .= $char[rand(0,$length_char-1)];
+              }
+              return $id_khacvl;
+            }
         //Them bang Giat:
         $giat = new giat();
             //Khoa chinh:
@@ -81,13 +76,34 @@ class pagecontroller extends Controller
                 $time = Carbon::now();
             $giat->giatluc = $time;
             $giat->save();
-          //Them vao bang chi tiet hoa don:
-          $cthd = new cthd();
-          $cthd->trangthai = $request->trangthai;
-          $cthd->id_khachhang = $kc_kh;
-          $cthd->id_giat = $id_giat;
-          $cthd->save();
+
+            if($request->loaikh=="Khách vãng lai"){
+                //Them khach vang lai vao bang khach hang:
+                $id_khachhang = gen_IDKhachvanglai();
+                $khachvl = new khachhang();
+                $khachvl->id_khachhang = $id_khachhang;
+                $khachvl->loaikh = $request->loaikh;
+                $khachvl->save();
+                //Them vao bang cthd:
+                $cthd = new cthd();
+                $cthd->trangthai = $request->trangthai;
+                $cthd->id_khachhang = $id_khachhang;
+                $cthd->id_giat = $id_giat;
+                $cthd->save();
+            }
+            else {
+                $cthd = new cthd();
+                $cthd->trangthai = $request->trangthai;
+                $cthd->id_khachhang = $request->id_khachhang;
+                $cthd->id_giat = $id_giat;
+                $cthd->save();
+            }
+
             return redirect()->route('home')->with('ThongBao', 'Hãy bắt đầu giặt đi!');
+      }
+      public function ajaxKhachchinh(){
+          $thongtin = DB::table('khachhang')->where('loaikh', 'Khách chinh')->get();
+          return view('adminpage.home.ajaxkhachchinh',['thongtin'=>$thongtin]);
       }
   //THONG KE:
         public function getThongkechung(){
@@ -158,7 +174,6 @@ class pagecontroller extends Controller
         }
         //THong ke khach hang:
         public function getThongkekhachhang(){
-
           return view('adminpage.thongke.thongkekhachhang');
         }
     //KHÁCH HÀNG:
@@ -168,9 +183,27 @@ class pagecontroller extends Controller
         }
         public function getAjaxQuan($id){
         $phuong = DB::table('ward')->where('districtid','=',$id)->get();
-        return view('adminpage.home.ajaxphuong',['quan'=>$phuong]);
-      }
-    //
+          return view('adminpage.home.ajaxphuong',['quan'=>$phuong]);
+        }
+        public function postThemtaikhoankhachhang(Request $request){
+          $khachhang = new khachhang();
+          $khachhang->id_khachhang = $request->id_khachhang;
+          $khachhang->tenkh = $request->tenkh;
+          $khachhang->loaikh = "Khách chính";
+          $khachhang->sodt = $request->sodt;
+          $khachhang->taoluc = Carbon::now();
+          $khachhang->id_tp = "79";
+          $khachhang->id_quan = $request->quan;
+          $khachhang->id_phuong = $request->phuong;
+          $khachhang->save();
+          return redirect('admin/quanlykhachhhang/themtaikhoankhachhang')
+          ->with('thongbao_tc', 'Đã thêm thành công khách hàng');
+
+        }
+        public function getTaikhoankhachhang(){
+          $thongtin = DB::table('khachhang')->get();
+          return view('adminpage.khachhang.thongtintaikhoan',['thongtin'=>$thongtin]);
+        }
     //LỊCH SỬ GIẶT ỦI:
         public function getLichsu(){
           $thongtin = DB::table('giat')->join('cthd','cthd.id_giat','=','giat.id_giat')->get();

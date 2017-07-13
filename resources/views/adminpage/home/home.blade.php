@@ -41,6 +41,19 @@
               }
             });
 
+            $('#khachvanglai').click(function(){
+              $('#click').hide();
+
+            });
+
+            $('#khachchinh').click(function(){
+                var link = "http://localhost/Bee/public/index.php/admin/home/ajaxkhachchinh/khachchinh";
+                $.get(link, function(data){
+                  $('#html_khachchinh').html(data);
+                });
+
+            });
+
         });
         </script>
         <style media="screen">
@@ -90,14 +103,7 @@
                   </p>
                     <label for="">Loại khách hàng: </label>
                     <script type="text/javascript">
-                      /*  $(document).ready(function(){
-                          $('#khachchinh').click(function(){
-                            $("#thongtin").html("<p style='font-weight: bold; font-size: 14px' id='chinh'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Số điện thoại<input type='number' name='sodt' id='sodt' class='form-control' value='1' style='width: 40%; margin-left: 10%;'/> </p>");
-                          });
-                          $('#khachvanglai').click(function(){
-                            $('#chinh').hide();
-                          });
-                        }); */
+
                     </script>
 
                     <div class="form-group">
@@ -106,6 +112,9 @@
                           </p>
                           <p> Khách chính:
                             <input type="radio" name="loaikh" value="Khách chính" id="khachchinh" style="width: 30px; height: 20px; ">
+                            <div id="html_khachchinh" style="margin-left: 20%;">
+
+                            </div>
                             <div id="thongtin">
                                 <input type="hidden" name="tiengiat" value="0" id="tiengiat">
                                 <input type="hidden" name="tiensay" value="0" id="tiensay2">
@@ -130,3 +139,6 @@
   @include('layouts.lib_js_home')
 </body>
 </html>
+<?php
+
+ ?>

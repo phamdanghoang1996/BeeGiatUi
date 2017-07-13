@@ -17,6 +17,7 @@ Route::group(['prefix'=>'admin'], function(){
   Route::get('home','pagecontroller@getHome')->name('home');
   Route::post('home','pagecontroller@postHome')->name('postHome');
   Route::get('home/ajaxkhachhang/id','pagecontroller@ajaxKhachhang');
+  Route::get('home/ajaxkhachchinh/khachchinh','pagecontroller@ajaxKhachchinh');
   //THONG KE:
   Route::get('thongke','pagecontroller@getThongke');
   Route::group(['prefix'=>'thongke'], function(){
@@ -35,7 +36,9 @@ Route::group(['prefix'=>'admin'], function(){
   Route::get('lichsugiat','pagecontroller@getLichsu');
   //QUAN LY KHACH HANG:
   Route::group(['prefix'=>'quanlykhachhhang'],function(){
+    //them khach hang:
     Route::get('themtaikhoankhachhang','pagecontroller@getThemtaikhoankhachhang');
+    Route::post('themtaikhoankhachhang','pagecontroller@postThemtaikhoankhachhang')->name('postKhachhang');
     Route::get('themtaikhoankhachhang/ajaxquan/{id}','pagecontroller@getAjaxQuan');
     Route::get('taikhoankhachhang','pagecontroller@getTaikhoankhachhang');
   });

@@ -139,7 +139,7 @@
 </html>
 <?php
   function randomString(){
-    $char = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+    $char = 'qwertyuiopasdfghjklzxcvbnAS2123SSAC1213SAVSDCAA11213ASm1234567890';
     $char_length = strlen($char);
     $return_String = '';
     for ($i = 0; $i<10; $i++){

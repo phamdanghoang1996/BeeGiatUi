@@ -24,7 +24,7 @@
             margin-top: 20px;
           }
           .table-bordered{
-            width: 90%;
+            width: 100%;
             margin-top: 1%;
           }
           button {
@@ -38,7 +38,7 @@
             background-color: #DFF0D8;
           }
         </style>
-          <div class="container" class="form-group" style="width: 90%; margin-left: 15%;">
+          <div class="container" class="form-group" style="width: 100%;">
               <h3> Lịch sử giặt:  </h3>
               <div id="chucnang">
                     <button type="button" name="button" class="btn-success"><span class="glyphicon glyphicon-save-file"></span>Xuất lịch sử</button>

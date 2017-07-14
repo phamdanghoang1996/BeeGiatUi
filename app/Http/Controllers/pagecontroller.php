@@ -92,6 +92,9 @@ class pagecontroller extends Controller
                 $cthd->save();
             }
             else {
+                DB::table('khachhang')->where('id_khachhang', $request->id_khachhang)->update([
+                  'diemtichluy'=>$request->thanhtien/1000
+                ]);
                 $cthd = new cthd();
                 $cthd->trangthai = $request->trangthai;
                 $cthd->id_khachhang = $request->id_khachhang;
@@ -192,6 +195,7 @@ class pagecontroller extends Controller
           $khachhang->loaikh = "Khách chính";
           $khachhang->sodt = $request->sodt;
           $khachhang->taoluc = Carbon::now();
+          $khachhang->diemtichluy = "0";
           $khachhang->id_tp = "79";
           $khachhang->id_quan = $request->quan;
           $khachhang->id_phuong = $request->phuong;
@@ -201,7 +205,11 @@ class pagecontroller extends Controller
 
         }
         public function getTaikhoankhachhang(){
-          $thongtin = DB::table('khachhang')->get();
+          $thongtin = DB::table('khachhang')->join('ward','ward.wardid','khachhang.id_phuong')
+                                            ->join('district','district.districtid','khachhang.id_quan')
+                                            ->join('province','province.provinceid','khachhang.id_tp')->get();
+
+
           return view('adminpage.khachhang.thongtintaikhoan',['thongtin'=>$thongtin]);
         }
     //LỊCH SỬ GIẶT ỦI:
@@ -267,6 +275,22 @@ class pagecontroller extends Controller
               ]);
             }
         }
+        //NHAN VIEN:
+        public function getTienluong(){
+          $thongtin = DB::table('nhanvien')->join('luong','luong.id_luong','nhanvien.maluong')->get();
+          return view('adminpage.nhanvien.dacquyen.tienluong',['thongtin'=>$thongtin]);
+        }
+        public function getNgaynghi(){
+
+
+        }
+        public function getNocong(){
+
+        }
+        public function getTienthuong(){
+
+
+        }
     //CAI DAT:
       //Cập nhật Giá:
         public function getCapnhat(){
@@ -284,14 +308,30 @@ class pagecontroller extends Controller
             ]);
             return redirect()->route('capnhatgia')->with('ThongBao', 'Đã cập nhật thành công giá!');
         }
+      //CHUONG TRINH KHUYEN MAI:
         public function getChuongtrinh(){
-          echo "Chuong trinh khuyen mai";
+          $thongtin = DB::table('chuongtrinhkhuyenai')->get();
+          return view('adminpage.caidat.chuongtrinhkhuyenmai',['thongtin'=>$thongtin]);
         }
+      //KHOI PHUC TAI KHOAN NHAN VIEN:
         public function getKhoiphuc(){
-          echo "Day la trang khoi phuc";
+          $thongtin = DB::table('nhanvien')->get();
+          return view('adminpage.caidat.khoiphucmatkhau',['thongtin'=>$thongtin]);
+        }
+        public function ajaxKhoiphuc($id){
+          $taikhoan = DB::table('taikhoan')->where('id_nhanvien',$id)->get();
+          return view('adminpage.caidat.ajaxkhoiphuc',['taikhoan'=>$taikhoan]);
+        }
+        public function postKhoiphuc(Request $request){
+          //Update vao bang taikhoan:
+          DB::table('taikhoan')->where('id_taikhoan',$request->id_taikhoan)->update([
+            'tentaikhoan'=>$request->new_tentk,
+            'matkhau'=>$request->new_password
+          ]);
         }
     //kiểm tra dữ thống kê:
       public function testchart(){
         return view('chartGiatUi');
       }
+
 }

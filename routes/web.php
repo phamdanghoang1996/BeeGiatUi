@@ -65,7 +65,10 @@ Route::group(['prefix'=>'admin'], function(){
       Route::get('capnhatgia','pagecontroller@getCapnhat')->name('capnhatgia');
       Route::post('capnhatgia','pagecontroller@postCapnhat')->name('postCapnhat');
       Route::get('chuongtrinhkhuyenmai','pagecontroller@getChuongtrinh');
+      //Khoi phuc tai khoan nhan vien:
       Route::get('khoiphuctaikhoan','pagecontroller@getKhoiphuc');
+      Route::post('khoiphuctaikhoan','pagecontroller@postKhoiphuc')->name('updatePassword');
+      Route::get('khoiphuctaikhoan/{id}','pagecontroller@ajaxKhoiphuc');
   });
 
 });

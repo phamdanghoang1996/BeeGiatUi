@@ -4,6 +4,7 @@
 
 <head>
     @include('layouts.lib_css_home')
+    <script type="text/javascript" src={{asset('js/jquery.validate.min.js')}}> </script>
 </head>
   <script type="text/javascript">
     function xuly(id){
@@ -65,26 +66,25 @@
               <table class="table-bordered">
                   <thead class="text-center">
                       <td style="width:10%;">ID</td>
-                      <td>Tên nhân viên</td>
-                      <td>Tên tài khoản</td>
-                      <td>Ngày khởi tạo</td>
+                      <td>Tên khách hàng</td>
+                      <td style="width: 12%;">Loại khách hàng</td>
+                      <td>Tạo lúc</td>
+                      <td>Địa chỉ</td>
+                      <td>Số điện thoại</td>
                       <td>Chức năng</td>
                   </thead>
                   @foreach($thongtin as $key)
                   <tbody class="text-center">
-                      <td>{{$key->id_taikhoan}}</td>
-                      <td>{{$key->tennhanvien}}</td>
-                      <td>{{$key->tentaikhoan}}</td>
-                      <td>{{$key->time}}</td>
+                      <td>{{$key->id_khachhang}}</td>
+                      <td>{{$key->tenkh}}</td>
+                      <td>{{$key->loaikh}}</td>
+                      <td>{{$key->taoluc}}</td>
+                      <td>{{$key->phuong}}, {{$key->quan}}, {{$key->thanhpho}}</td>
+                      <td>{{$key->sodt}}</td>
                       <td>
                         <button type="button" name="button" class="btn-info">Xem chi tiết</button>
-                        @if($key->trangthai==0)
                         <button type="button" name="button" class="btn-danger" onclick="xuly(this)"
-                        id="{{$key->id_taikhoan}}" data-id-type="{{$key->trangthai}}">Kích hoạt</button>
-                        @else
-                        <button type="button" name="button" class="btn-success" onclick="xuly(this)"
-                        id="{{$key->id_taikhoan}}" data-id-type="{{$key->trangthai}}">Đang hoạt động</button>
-                        @endif
+                        id="" data-id-type="">Xóa</button>
                       </td>
                   </tbody>
                   @endforeach

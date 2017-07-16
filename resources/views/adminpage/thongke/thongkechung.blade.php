@@ -58,30 +58,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="panel-default" style="background-color: #00B858;">
-                  <div class="panel-body">
-                    <div class="col-md-5">
-                      <img src="{{asset('images/thongkechung/khachhang.png')}}" class="img-responsive">
-                    </div>
-                    <div class="col-md-7">
-                      <div class="text-center">
-                        <h5 style="font-weight: bold; color: #FFF; font-size: 22px;">TOP </h5>
-                      </div>
-                      <div class="text-right">
-                      @foreach($khachhang as $item)
-                      <p style="font-weight: bold; color: #FFFF; font-size: 16px;">Tên: </p>
-                        <p style="font-weight: bold; color: #FFFF; font-size: 16px;">{{$item->loaikh}}</p>
-                        <p style="font-weight: bold; color: #FFFF; font-size: 16px;">{{number_format($item->thanhtien)}} đồng</p>
-                      </div>
-                      @endforeach
-                    </div>
-                  </div>
-                  <div class="panel-footer" style="background-color: #00A64F;">
-                    <a href="" style="font-weight: bold; color: #FFFFFF; font-size: 17px;">Xem chi tiết</a>
-                  </div>
-              </div>
-            </div>
+
 
             <div class="col-md-6">
               <div class="panel-default">
@@ -132,6 +109,31 @@
                     </div>
                   </div>
                   <div class="panel-footer" style="background-color: #DD5445;">
+                    <a href="" style="font-weight: bold; color: #FFFFFF; font-size: 17px;">Xem chi tiết</a>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="panel-default" style="background-color: #00B858;">
+                  <div class="panel-body">
+                    <div class="col-md-5">
+                      <img src="{{asset('images/thongkechung/khachhang.png')}}" class="img-responsive">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="text-center">
+                        <h5 style="font-weight: bold; color: #FFF; font-size: 22px;">TOP </h5>
+                      </div>
+                      <div class="text-right">
+                      @foreach($khachhang as $item)
+                      <p style="font-weight: bold; color: #FFFF; font-size: 16px;">Tên: </p>
+                        <p style="font-weight: bold; color: #FFFF; font-size: 16px;">{{$item->loaikh}}</p>
+                        <p style="font-weight: bold; color: #FFFF; font-size: 16px;">{{number_format($item->thanhtien)}} đồng</p>
+                      </div>
+                      @endforeach
+                    </div>
+                  </div>
+                  <div class="panel-footer" style="background-color: #00A64F;">
                     <a href="" style="font-weight: bold; color: #FFFFFF; font-size: 17px;">Xem chi tiết</a>
                   </div>
               </div>

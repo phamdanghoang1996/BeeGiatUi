@@ -71,6 +71,7 @@ class pagecontroller extends Controller
             //Tien giat, tien say:
             $giat->tiengiat = $request->tiengiat;
             $giat->tiensay = $request->tiensay;
+            $giat->id_chuongtrinh = "ct1";
             $giat->thanhtien = $request->thanhtien;
             //Giat luc:
                 $time = Carbon::now();
@@ -312,6 +313,13 @@ class pagecontroller extends Controller
         public function getChuongtrinh(){
           $thongtin = DB::table('chuongtrinhkhuyenai')->get();
           return view('adminpage.caidat.chuongtrinhkhuyenmai',['thongtin'=>$thongtin]);
+        }
+        public function ajaxChuongtrinh($id_chuongtrinh,$id){
+          echo "hehe";
+          DB::table('chuongtrinhkhuyenai')->where('mact', $id_chuongtrinh)
+          ->update([
+            'trangthai'=>$id
+          ]);
         }
       //KHOI PHUC TAI KHOAN NHAN VIEN:
         public function getKhoiphuc(){

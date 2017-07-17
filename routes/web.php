@@ -41,6 +41,7 @@ Route::group(['prefix'=>'admin'], function(){
     Route::post('themtaikhoankhachhang','pagecontroller@postThemtaikhoankhachhang')->name('postKhachhang');
     Route::get('themtaikhoankhachhang/ajaxquan/{id}','pagecontroller@getAjaxQuan');
     Route::get('taikhoankhachhang','pagecontroller@getTaikhoankhachhang');
+    Route::get('taikhoankhachhang/{id_khachhang}','pagecontroller@ajaxThongtin');
   });
   //QUAN LY NHAN VIEN:
   Route::group(['prefix'=>'quanlynhanvien'], function(){
@@ -72,6 +73,5 @@ Route::group(['prefix'=>'admin'], function(){
       Route::post('khoiphuctaikhoan','pagecontroller@postKhoiphuc')->name('updatePassword');
       Route::get('khoiphuctaikhoan/{id}','pagecontroller@ajaxKhoiphuc');
   });
-
+Route::get('check','pagecontroller@checkDia');
 });
-Route::get('testchart','pagecontroller@testchart');

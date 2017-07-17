@@ -29,10 +29,21 @@
         $.get(link);
       }
     }
-  </script>
-<body>
-  <div id="wrapper">
 
+    function dia(id){
+      var id_khachhang = id.getAttribute("id");
+      var id_khachhang_close = '#'+id_khachhang+'close';
+        $("#window").show();
+        $('body').css("opacity", "0.3");
+      $(id_khachhang_close).click(function(){
+        $('#window').hide();
+        $('body').css("opacity", "1");
+      });
+    }
+  </script>
+
+<body style="">
+  <div id="wrapper">
       <!-- Navigation -->
       @include('layouts.theme.navmenu')
       <div id="page-wrapper">
@@ -45,6 +56,7 @@
           h3{
             font-weight: bold;
             margin-top: 20px;
+
           }
           .table-bordered{
             width: 100%;
@@ -82,10 +94,34 @@
                       <td>{{$key->phuong}}, {{$key->quan}}, {{$key->thanhpho}}</td>
                       <td>{{$key->sodt}}</td>
                       <td>
-                        <button type="button" name="button" class="btn-info">Xem chi tiết</button>
+                        <button type="button" name="button" class="btn-info" onclick="dia(this)"
+                        id="{{$key->id_khachhang}}">Xem chi tiết</button>
                         <button type="button" name="button" class="btn-danger" onclick="xuly(this)"
                         id="" data-id-type="">Xóa</button>
                       </td>
+                      <div id="khachhang">
+                        <dialog id="window" style="width: 30%; height: 300px; border: 1px solid; opacity: 1;">
+                          <div class="panel-info">
+                            <div class="panel-heading">
+                                  <span style="font-weight: bold; font-size: 18px;">Thông tin khách hàng</span>
+                                  <button id="{{$key->id_khachhang.'close'}}">X</button>
+                            </div>
+                            <div class="panel-body">
+                                <style media="screen">
+                                  span{
+                                    font-weight: bold;
+                                  }
+                                </style>
+                                <p><span>Mã khách hàng:</span> {{$key->id_khachhang}} </p>
+                                <p><span>Tên khách hàng</span> {{$key->tenkh}} </p>
+                                <p><span>Loại khách hàng:</span> {{$key->loaikh}} </p>
+                                <p><span>Tạo lúc:</span> {{$key->taoluc}} </p>
+                                <p><span>Địa chỉ:</span> {{$key->phuong}}, {{$key->quan}}, {{$key->thanhpho}} </p>
+                                <p><span>Số điện thoại: </span> {{$key->sodt}} </p>
+                            </div>
+                          </div>
+                        </dialog>
+                      </div>
                   </tbody>
                   @endforeach
               </table>
@@ -101,4 +137,5 @@
   <!-- /#wrapper -->
   @include('layouts.lib_js_home')
 </body>
+
 </html>

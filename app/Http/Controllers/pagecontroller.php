@@ -209,10 +209,9 @@ class pagecontroller extends Controller
           $thongtin = DB::table('khachhang')->join('ward','ward.wardid','khachhang.id_phuong')
                                             ->join('district','district.districtid','khachhang.id_quan')
                                             ->join('province','province.provinceid','khachhang.id_tp')->get();
-
-
           return view('adminpage.khachhang.thongtintaikhoan',['thongtin'=>$thongtin]);
         }
+      
     //LỊCH SỬ GIẶT ỦI:
         public function getLichsu(){
           $thongtin = DB::table('giat')->join('cthd','cthd.id_giat','=','giat.id_giat')->get();
@@ -340,6 +339,10 @@ class pagecontroller extends Controller
     //kiểm tra dữ thống kê:
       public function testchart(){
         return view('chartGiatUi');
+      }
+
+      public function checkDia(){
+        return view('checkDia');
       }
 
 }
